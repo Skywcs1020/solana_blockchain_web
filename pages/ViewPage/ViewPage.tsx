@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useTable } from "react-table";
+// import { useTable } from "react-table";
 import "./ViewPage.css";
 
 const fakeData = [
@@ -41,7 +41,7 @@ const fakeData = [
   },
 ];
 
-function ViewPage() {
+const ViewPage = () => {
   const data = useMemo(() => fakeData, []);
   const columns = useMemo(
     () => [
@@ -65,8 +65,8 @@ function ViewPage() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+  // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+  //   useTable({ columns, data });
 
   return (
     <center>
@@ -75,7 +75,7 @@ function ViewPage() {
         <h4>Product ID: 7495</h4>
 
         <center className="container">
-          <table {...getTableProps()}>
+          {/* <table {...getTableProps()}>
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -99,7 +99,7 @@ function ViewPage() {
                 );
               })}
             </tbody>
-          </table>
+          </table> */}
         </center>
       </div>
     </center>
