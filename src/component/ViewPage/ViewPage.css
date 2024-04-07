@@ -24,7 +24,7 @@ body {
 
 .container {
   position: absolute;
-  top: 55%;
+  top: 500px;
   left: 50%;
   max-height: 700px;
   overflow-y: scroll;

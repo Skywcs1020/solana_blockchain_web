@@ -1,4 +1,8 @@
-.container {
-	padding: 20px;
-	width: 70%;
+#blockButton {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: transform 0.2s;
+}
+
+#blockButton:hover {
+	transform: scale(1.05);
 }

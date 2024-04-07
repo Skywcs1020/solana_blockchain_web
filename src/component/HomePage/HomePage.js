@@ -6,10 +6,11 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBBtn,
+  MDBIcon,
   MDBRow,
   MDBCol,
 } from "mdb-react-ui-kit";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import "./HomePage.css";
 
 function HomePage() {
@@ -19,42 +20,53 @@ function HomePage() {
         padding: "40px",
         width: "70%",
         margin: "0 auto",
-        height: "100px",
       }}>
-      <MDBRow className="row-cols-1 row-cols-md-2 g-5">
+      <MDBRow className="row-cols-md-2 g-5">
         <MDBCol>
           <Link to="/update">
-            <MDBCard>
-              <MDBCardImage
-                src="https://articlesbase.com/wp-content/uploads/2019/06/writing.jpg"
-                position="top"
-                style={{ height: "400px" }}
-                alt="..."
-              />
-              <MDBCardBody>
-                <MDBCardTitle>Update</MDBCardTitle>
-                <MDBCardText></MDBCardText>
-                {/* <MDBBtn href="#">Button</MDBBtn> */}
-              </MDBCardBody>
-            </MDBCard>
+						<div className="p-3 border rounded-7" id="blockButton">
+							<MDBIcon fas icon="user-edit" 
+								className="ms-1" 
+								size="3x" 
+							/>
+							<h3 className="my-2">Register</h3>
+						</div>
           </Link>
         </MDBCol>
 
         <MDBCol>
           <Link to="/view">
-            <MDBCard>
-              <MDBCardImage
-                src="https://www.cyberadviserblog.com/wp-content/uploads/sites/18/2023/01/1674238823-3954-8348-lxb_photopypeCEaJeZYlxb_photo-.jpg"
-                position="top"
-                style={{ height: "400px" }}
-                alt="..."
-              />
-              <MDBCardBody>
-                <MDBCardTitle>View</MDBCardTitle>
-                <MDBCardText></MDBCardText>
-                {/* <MDBBtn href="#">Button</MDBBtn> */}
-              </MDBCardBody>
-            </MDBCard>
+            <div className="p-3 border rounded-7" id="blockButton">
+							<MDBIcon fas icon="plus-circle" 
+								className="ms-1" 
+								size="3x" 
+							/>
+							<h3 className="my-2">Create</h3>
+						</div>
+          </Link>
+        </MDBCol>
+
+				<MDBCol>
+          <Link to="/create">
+            <div className="p-3 border rounded-7" id="blockButton">
+							<MDBIcon fas icon="edit" 
+								className="ms-1" 
+								size="3x" 
+							/>
+							<h3 className="my-2">Update</h3>
+						</div>
+          </Link>
+        </MDBCol>
+
+				<MDBCol>
+          <Link to="/create">
+            <div className="p-3 border rounded-7" id="blockButton">
+							<MDBIcon fas icon="clipboard-list" 
+								className="ms-1" 
+								size="3x" 
+							/>
+							<h3 className="my-2">View</h3>
+						</div>
           </Link>
         </MDBCol>
       </MDBRow>
