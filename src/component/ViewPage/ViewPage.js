@@ -41,7 +41,7 @@ const fakeData = [
   },
 ];
 
-function ViewPage() {
+const ViewPage = () => {
   const data = useMemo(() => fakeData, []);
   const columns = useMemo(
     () => [

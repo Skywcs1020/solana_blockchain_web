@@ -10,7 +10,7 @@ const uploader = Uploader({
 // Configuration options: https://www.bytescale.com/docs/upload-widget/frameworks/react#customize
 const options = { multi: true };
 
-function UpdatePage() {
+const UpdatePage = () => {
   const [id, setID] = useState("");
   const [organization, setOrganization] = useState("");
   const [address, setAddress] = useState("");

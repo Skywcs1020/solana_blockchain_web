@@ -1,29 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
   MDBIcon,
   MDBRow,
   MDBCol,
 } from "mdb-react-ui-kit";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import "./HomePage.css";
 
-function HomePage() {
+const HomePage = () => {
   return (
     <center
       style={{
         padding: "40px",
-        width: "70%",
+        width: "50%",
         margin: "0 auto",
       }}>
       <MDBRow className="row-cols-md-2 g-5">
         <MDBCol>
-          <Link to="/update">
+          <Link to="/register">
 						<div className="p-3 border rounded-7" id="blockButton">
 							<MDBIcon fas icon="user-edit" 
 								className="ms-1" 
@@ -35,7 +29,7 @@ function HomePage() {
         </MDBCol>
 
         <MDBCol>
-          <Link to="/view">
+          <Link to="/create">
             <div className="p-3 border rounded-7" id="blockButton">
 							<MDBIcon fas icon="plus-circle" 
 								className="ms-1" 
@@ -47,7 +41,7 @@ function HomePage() {
         </MDBCol>
 
 				<MDBCol>
-          <Link to="/create">
+          <Link to="/update">
             <div className="p-3 border rounded-7" id="blockButton">
 							<MDBIcon fas icon="edit" 
 								className="ms-1" 
@@ -59,7 +53,7 @@ function HomePage() {
         </MDBCol>
 
 				<MDBCol>
-          <Link to="/create">
+          <Link to="/view">
             <div className="p-3 border rounded-7" id="blockButton">
 							<MDBIcon fas icon="clipboard-list" 
 								className="ms-1" 
