@@ -11,6 +11,7 @@ import WalletContextProvider from "./contexts/WalletContextProvider";
 import "./App.css";
 
 function App() {
+		require("dotenv").config();
     return (
         <div>
             <Router>

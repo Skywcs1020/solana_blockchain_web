@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import { Uploader } from "uploader";
-import { UploadDropzone } from "react-uploader";
+import axios from "axios";
+
 import "./UpdatePage.css";
-
-const uploader = Uploader({
-  apiKey: "free", // Get production API keys from Bytescale
-});
-
-// Configuration options: https://www.bytescale.com/docs/upload-widget/frameworks/react#customize
-const options = { multi: true };
 
 const UpdatePage = () => {
   const [id, setID] = useState("");
@@ -16,10 +9,51 @@ const UpdatePage = () => {
   const [address, setAddress] = useState("");
   const [nextOwner, setNextOwner] = useState("");
   const [mode, setMode] = useState("Air");
+	const [file, setFile] = useState(null);
+
+	// const retrieveFile = (e) => {
+
+	// 	const data = e.target.files[0];
+	// 	const reader = new window.FileReader();
+	// 	reader.readAsArrayBuffer(data);
+	// 	reader.onloadend = ()=> {
+	// 		setFile(Buffer(reader.result));
+	// 	}
+
+	// 	e.preventDefault();
+	// }
+
+	const handleSubmit = async (e) => {
+
+		e.preventDefault();
+
+		try {
+			const fileData = new FormData();
+			fileData.append("file", file);
+
+			console.log(process.env.REACT_APP_PINATA_API_KEY);
+
+			const responseData = await axios({
+				method: "post",
+				url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+				data: fileData,
+				headers: {
+					pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+					pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET_KEY,
+					"Content-Type": "mulitpart/form-data",
+				}
+			});
+
+			const fileUrl = "https://gateway.pinata.cloud/ipfs/" + responseData.data.IpfsHash;
+			console.log(fileUrl)
+		} catch (error) {
+			console.log(error.message);
+		}
+	}
 
   return (
     <div className="create">
-      <form style={{ padding: "20px" }}>
+      <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
         <h4>Update a new record</h4>
         <label>Product ID</label>
         <input
@@ -60,36 +94,16 @@ const UpdatePage = () => {
           <option value="Rail">Rail</option>
         </select>
 
-        {/* <label>Mode of shipment</label>
-        <form>
-          <div className="radio">
-            <label>
-              <input type="radio" value="option1" checked={true} />
-              Air
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" value="option2" />
-              Ocean
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" value="option3" />
-              Express
-            </label>
-          </div>
-        </form> */}
-
-        <UploadDropzone
+				<label>Certificates</label>
+				<input type="file" name="data" onChange={(e) => setFile(e.target.files[0])}/>
+        {/* <UploadDropzone
           uploader={uploader}
           options={options}
           onUpdate={(files) => alert(files.map((x) => x.fileUrl).join("\n"))}
           width="600px"
           height="375px"
-        />
-        <button>Submit</button>
+        /> */}
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
