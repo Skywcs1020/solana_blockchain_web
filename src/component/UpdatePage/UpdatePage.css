@@ -27,9 +27,14 @@ h4 {
 
 .create button {
 	background: #2c5875;
+	margin: 10px;
 	color: #fff;
 	border: 0;
 	padding: 8px;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.create .disabledButton {
+	background: gray;
 }

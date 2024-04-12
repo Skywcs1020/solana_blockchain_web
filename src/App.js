@@ -20,9 +20,9 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/view" element={<ViewLoadPage />} />
-                    <Route path="/view/:attribute" element={<ViewPage />} />
+                    <Route path="/view/:id" element={<ViewPage />} />
                     <Route path="/update" element={<UpdateLoadPage />} />
-                    <Route path="/update/:attribute" element={<UpdatePage />} />
+                    <Route path="/update/:id" element={<UpdatePage />} />
                 </Routes>
 							</WalletContextProvider>
             </Router>

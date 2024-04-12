@@ -1,27 +1,20 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 import "./UpdatePage.css";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const UpdatePage = () => {
-  const [id, setID] = useState("");
+  const { id } = useParams();
   const [organization, setOrganization] = useState("");
   const [address, setAddress] = useState("");
   const [nextOwner, setNextOwner] = useState("");
   const [mode, setMode] = useState("Air");
 	const [file, setFile] = useState(null);
+	const { connected } = useWallet();
 
-	// const retrieveFile = (e) => {
-
-	// 	const data = e.target.files[0];
-	// 	const reader = new window.FileReader();
-	// 	reader.readAsArrayBuffer(data);
-	// 	reader.onloadend = ()=> {
-	// 		setFile(Buffer(reader.result));
-	// 	}
-
-	// 	e.preventDefault();
-	// }
 
 	const handleSubmit = async (e) => {
 
@@ -30,8 +23,6 @@ const UpdatePage = () => {
 		try {
 			const fileData = new FormData();
 			fileData.append("file", file);
-
-			console.log(process.env.REACT_APP_PINATA_API_KEY);
 
 			const responseData = await axios({
 				method: "post",
@@ -55,13 +46,6 @@ const UpdatePage = () => {
     <div className="create">
       <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
         <h4>Update a new record</h4>
-        <label>Product ID</label>
-        <input
-          type="text"
-          required
-          value={id}
-          onChange={(e) => setID(e.target.value)}
-        />
 
         <label>Organization Name</label>
         <input
@@ -95,15 +79,8 @@ const UpdatePage = () => {
         </select>
 
 				<label>Certificates</label>
-				<input type="file" name="data" onChange={(e) => setFile(e.target.files[0])}/>
-        {/* <UploadDropzone
-          uploader={uploader}
-          options={options}
-          onUpdate={(files) => alert(files.map((x) => x.fileUrl).join("\n"))}
-          width="600px"
-          height="375px"
-        /> */}
-        <button type="submit">Submit</button>
+				<input type="file" name="data" onChange={(e) => setFile(e.target.files[0])} required/>
+        <button disabled={ !connected } className={ connected ? "enabledButton" : "disabledButton"}>Submit</button>
       </form>
     </div>
   );
