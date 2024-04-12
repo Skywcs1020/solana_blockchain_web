@@ -11,7 +11,6 @@ const UpdatePage = () => {
   const [organization, setOrganization] = useState("");
   const [address, setAddress] = useState("");
   const [nextOwner, setNextOwner] = useState("");
-  const [mode, setMode] = useState("Air");
 	const [file, setFile] = useState(null);
 	const { connected } = useWallet();
 
@@ -69,14 +68,6 @@ const UpdatePage = () => {
           value={nextOwner}
           onChange={(e) => setNextOwner(e.target.value)}
         />
-
-        <label>Mode of shipment</label>
-        <select value={mode} onChange={(e) => setMode(e.target.value)}>
-          <option value="Air">Air</option>
-          <option value="Ocean">Ocean</option>
-          <option value="Road">Road</option>
-          <option value="Rail">Rail</option>
-        </select>
 
 				<label>Certificates</label>
 				<input type="file" name="data" onChange={(e) => setFile(e.target.files[0])} required/>

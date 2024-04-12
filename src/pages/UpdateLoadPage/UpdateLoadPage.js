@@ -8,7 +8,7 @@ const UpdateLoadPage = () => {
     return (
         <center>
             <form style={{ padding: "20px" }}>
-                <h4>Update a new record</h4>
+                <h4>Update new record</h4>
                 <label>Product ID</label>
                 <input
                     type="text"
