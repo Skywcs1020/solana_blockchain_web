@@ -24,6 +24,15 @@ header {
 	color: var(--textColor);
 }
 
+.userField {
+	display: flex;
+	align-items: center;
+}
+
+.userField h5 {
+	padding: 0 1rem;
+}
+
 header h2 {
 	color:#eee;
 }

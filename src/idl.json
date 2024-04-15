@@ -1,0 +1,213 @@
+{
+	"version": "0.1.0",
+	"name": "product_tracker",
+	"constants": [
+		{
+			"name": "USER_SEED",
+			"type": "bytes",
+			"value": "[117, 115, 101, 114]"
+		},
+		{
+			"name": "PRODUCT_SEED",
+			"type": "bytes",
+			"value": "[112, 114, 111, 100, 117, 99, 116]"
+		}
+	],
+	"instructions": [
+		{
+			"name": "initUser",
+			"accounts": [
+				{
+					"name": "userAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "authority",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "certificate",
+					"type": "string"
+				},
+				{
+					"name": "role",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"name": "createProduct",
+			"accounts": [
+				{
+					"name": "productAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "userAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "authority",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "productName",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"name": "addRecord",
+			"accounts": [
+				{
+					"name": "userAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "productAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "authority",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "location",
+					"type": "string"
+				},
+				{
+					"name": "nextOwner",
+					"type": "publicKey"
+				},
+				{
+					"name": "certificate",
+					"type": "string"
+				}
+			]
+		}
+	],
+	"accounts": [
+		{
+			"name": "UserAccount",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "address",
+						"type": "publicKey"
+					},
+					{
+						"name": "certificate",
+						"type": "string"
+					},
+					{
+						"name": "role",
+						"type": "string"
+					},
+					{
+						"name": "productId",
+						"type": "u8"
+					}
+				]
+			}
+		},
+		{
+			"name": "ProductAccount",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "record",
+						"type": {
+							"vec": {
+								"defined": "Record"
+							}
+						}
+					},
+					{
+						"name": "recordCount",
+						"type": "u8"
+					},
+					{
+						"name": "productName",
+						"type": "string"
+					},
+					{
+						"name": "productOrigin",
+						"type": "publicKey"
+					}
+				]
+			}
+		}
+	],
+	"types": [
+		{
+			"name": "Record",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "location",
+						"type": "string"
+					},
+					{
+						"name": "nextOwner",
+						"type": "publicKey"
+					},
+					{
+						"name": "certificate",
+						"type": "string"
+					},
+					{
+						"name": "role",
+						"type": "string"
+					}
+				]
+			}
+		}
+	],
+	"errors": [
+		{
+			"code": 6000,
+			"name": "Unauthorized",
+			"msg": "You are not authorized to add record to this product."
+		},
+		{
+			"code": 6001,
+			"name": "Overflowed",
+			"msg": "There are too many records."
+		}
+	],
+	"metadata": {
+		"address": "HC7v6BhVukUcnzEqqkrv89ECrWemx1UTeMkmZchbs9AP"
+	}
+}

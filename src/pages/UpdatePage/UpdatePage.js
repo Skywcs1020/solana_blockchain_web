@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Button } from "@mui/material";
-
-import "./UpdatePage.css";
 import { useWallet } from "@solana/wallet-adapter-react";
 
+import "./UpdatePage.css";
+
 const UpdatePage = () => {
-  const { id } = useParams();
+  const [id, setId] = useState("");
   const [organization, setOrganization] = useState("");
   const [address, setAddress] = useState("");
   const [nextOwner, setNextOwner] = useState("");
 	const [file, setFile] = useState(null);
-	const { connected } = useWallet();
+	const { connected, publicKey } = useWallet();
+	
 
+	console.log(publicKey);
 
 	const handleSubmit = async (e) => {
 
@@ -45,6 +45,14 @@ const UpdatePage = () => {
     <div className="create">
       <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
         <h4>Update a new record</h4>
+
+				<label>Product ID</label>
+        <input
+          type="text"
+          required
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+        />
 
         <label>Organization Name</label>
         <input

@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import PulseLoader from "react-spinners/PulseLoader"
 
 import "./RegisterPage.css";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useProduct } from "../../contexts/Product";
 
 const RegisterPage = () => {
-    const { id } = useParams();
     const [organization, setOrganization] = useState("");
-    const [address, setAddress] = useState("");
-    const [nextOwner, setNextOwner] = useState("");
     const [file, setFile] = useState(null);
-    const { connected } = useWallet();
+		const [fileUrl, setFileUrl] = useState("");
+    const {
+        user,
+        connected,
+        registerUser,
+        transactionPending,
+    } = useProduct();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +39,8 @@ const RegisterPage = () => {
             const fileUrl =
                 "https://gateway.pinata.cloud/ipfs/" +
                 responseData.data.IpfsHash;
-            console.log(fileUrl);
+            setFileUrl(fileUrl);
+						registerUser(organization, fileUrl);
         } catch (error) {
             console.log(error.message);
         }
@@ -43,30 +48,42 @@ const RegisterPage = () => {
 
     return (
         <div className="create">
-            <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
-                <h4>Register an account</h4>
+            {!user ? (
+                <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
+                    <h4>Register an account</h4>
 
-                <label>Organization Name</label>
-                <input
-                    type="text"
-                    required
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
-                />
+                    <label>Organization Name</label>
+                    <input
+                        type="text"
+                        required
+                        value={organization}
+                        onChange={(e) => setOrganization(e.target.value)}
+                    />
 
-                <label>Certificates</label>
-                <input
-                    type="file"
-                    name="data"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    required
-                />
-                <button
-                    disabled={!connected}
-                    className={connected ? "enabledButton" : "disabledButton"}>
-                    Submit
-                </button>
-            </form>
+                    <label>Certificates</label>
+                    <input
+                        type="file"
+                        name="data"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        required
+                    />
+                    <button
+                        disabled={!connected}
+                        className={
+                            connected ? "enabledButton" : "disabledButton"
+                        }>
+                        Submit
+                    </button>
+                </form>
+            ) : ( transactionPending ? (
+                <div style={{ padding: "20px" }}>
+                    <PulseLoader color="#2c5875" />
+                </div>
+            ) : (
+                <div style={{ padding: "20px" }}>
+                    <h3>You have already registered an account</h3>
+                </div>
+            ))}
         </div>
     );
 };
