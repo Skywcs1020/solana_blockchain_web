@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./CreatePage.css";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -7,7 +7,7 @@ import { useProduct } from "../../contexts/Product"
 const CreatePage = () => {
     const [name, setName] = useState("");
     const { connected, publicKey } = useWallet();
-		const { createProduct } = useProduct();
+		const { createProduct, newProduct, setNewProduct } = useProduct();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,8 +15,17 @@ const CreatePage = () => {
 				createProduct(name);
     };
 
+		useEffect(() => {
+			setNewProduct("");
+		}, [])
+
     return (
         <div className="create">
+					{newProduct != "" ? (
+						<div style={{ padding: "20px", textAlign: "center" }}>
+							The new product is created and the assigned ID is <b>{newProduct}</b>
+						</div>
+					) : (
             <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
                 <h4>Create a product</h4>
 
@@ -34,6 +43,7 @@ const CreatePage = () => {
                     Submit
                 </button>
             </form>
+					)}
         </div>
     );
 };

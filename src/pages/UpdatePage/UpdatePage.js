@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useProduct } from "../../contexts/Product";
 
 import "./UpdatePage.css";
 
 const UpdatePage = () => {
   const [id, setId] = useState("");
-  const [organization, setOrganization] = useState("");
   const [address, setAddress] = useState("");
   const [nextOwner, setNextOwner] = useState("");
 	const [file, setFile] = useState(null);
-	const { connected, publicKey } = useWallet();
+	const { connected, transactionPending, addRecord, setTransactionPending } = useProduct();
 	
-
-	console.log(publicKey);
 
 	const handleSubmit = async (e) => {
 
@@ -35,7 +33,7 @@ const UpdatePage = () => {
 			});
 
 			const fileUrl = "https://gateway.pinata.cloud/ipfs/" + responseData.data.IpfsHash;
-			console.log(fileUrl)
+			addRecord(id, address, nextOwner, fileUrl);
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -52,14 +50,6 @@ const UpdatePage = () => {
           required
           value={id}
           onChange={(e) => setId(e.target.value)}
-        />
-
-        <label>Organization Name</label>
-        <input
-          type="text"
-          required
-          value={organization}
-          onChange={(e) => setOrganization(e.target.value)}
         />
 
         <label>Address</label>

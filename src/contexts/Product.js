@@ -26,6 +26,7 @@ export const ProductProvider = ({ children }) => {
 	const [user, setUser] = useState();
 	const [userProductId, setUserProductId] = useState(0);
 	const [transactionPending, setTransactionPending] = useState(false);
+	const [newProduct, setNewProduct] = useState("");
 
 	const anchorWallet = useAnchorWallet();
 	const { connection } = useConnection();
@@ -40,15 +41,13 @@ export const ProductProvider = ({ children }) => {
 	
 	useEffect(() => {
 		const start = async () => {
-			console.log(connected);
 			if (program && publicKey) {
 				try {
 					const [userPda] = await findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
 					const user = await program.account.userAccount.fetch(userPda);
-					console.log(user.productId);
 					if (user) {
 						setUser(user);
-						setUserProductId(user.product_id);
+						setUserProductId(user.productId);
 					}
 				} catch(err) {
 					console.log("No user");
@@ -62,7 +61,7 @@ export const ProductProvider = ({ children }) => {
 		start()
 	}, [program, publicKey, transactionPending])
 
-	const registerUser = async (role, certUrl) => {
+	const registerUser = async ( role, certUrl ) => {
 		if (program && publicKey) {
 			try {
 				setTransactionPending(true);
@@ -88,7 +87,6 @@ export const ProductProvider = ({ children }) => {
 
 	const createProduct = async ( productName ) => {
 		if (program && publicKey) {
-			setTransactionPending(true);
 
 			try {
 				setTransactionPending(true);
@@ -97,6 +95,42 @@ export const ProductProvider = ({ children }) => {
 
 				await program.methods
 				.createProduct(productName)
+				.accounts({
+					productAccount: productPda,
+					userAccount: userPda,
+					authority: publicKey,
+					SystemProgram: SystemProgram.programId
+				}).rpc()
+				
+				if (typeof productPda.toString() == "string") {
+					setNewProduct(productPda.toString());
+				}
+
+			} catch (err) {
+				console.log(err);
+			} finally {
+				setTransactionPending(false);
+			}
+		}
+	}
+
+	const addRecord = async ( productId, location, next_owner, certUrl ) => {
+		if (program && publicKey) {
+			try {
+				setTransactionPending(true);
+
+				console.log("running add record");
+
+				const [userPda] = await findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
+				const productPda = new PublicKey(productId);
+				const nextOwnerPda = new PublicKey(next_owner);
+				const temp = [productPda];
+
+				console.log(userPda);
+				console.log(productPda);
+
+				await program.methods
+				.addRecord(location, nextOwnerPda, certUrl)
 				.accounts({
 					productAccount: productPda,
 					userAccount: userPda,
@@ -119,8 +153,11 @@ export const ProductProvider = ({ children }) => {
 				user,
 				connected,
 				transactionPending,
+				newProduct,
+				setNewProduct,
 				registerUser,
-				createProduct
+				createProduct,
+				addRecord
 			}}
 		>
 
