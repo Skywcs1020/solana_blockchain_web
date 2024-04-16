@@ -1,31 +1,43 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { useProduct } from "../../contexts/Product";
 import "./ViewLoadPage.css";
 
 const ViewLoadPage = () => {
 	const [address, setAddress] = useState("");
+	const { allProduct } = useProduct();
+
+	// console.log(allProduct);
+
 	return (
-		<center>
+		<div className='create'>
       <form style={{ padding: "20px" }}>
         <h4>View a product record</h4>
-        <label>Product ID</label>
+        <label>Product ID </label>
         <input
           type="text"
           required
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-					className='inputbox'
         />
 			</form>
 
 		<Link to={`/view/${address}`}>
-			<div style={{ width: "80px" }} className="border rounded-3" id="blockButton">
-				<h5>
-					Enter
-				</h5>
-			</div>
+			<button className='enterButton'>Submit</button>
 		</Link>
-		</center>
+
+		{
+			allProduct.map((product) => {
+				return (
+					<div key={product.publicKey.toString()} className='p-1 border rounded-7 m-3' id="blockButton">
+						<Link to={`/view/${product.publicKey.toString()}`}>
+							<p>{product.account.productName}</p>
+							<p>Origin: {product.account.organization}</p>
+						</Link>
+					</div>
+				)})
+		}
+		</div>
 	)
 }
 

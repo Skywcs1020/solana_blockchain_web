@@ -27,6 +27,8 @@ export const ProductProvider = ({ children }) => {
 	const [userProductId, setUserProductId] = useState(0);
 	const [transactionPending, setTransactionPending] = useState(false);
 	const [newProduct, setNewProduct] = useState("");
+	const [updateSuccess, setUpdateSuccess] = useState(false);
+	const [allProduct, setAllProduct] = useState([]);
 
 	const anchorWallet = useAnchorWallet();
 	const { connection } = useConnection();
@@ -48,6 +50,11 @@ export const ProductProvider = ({ children }) => {
 					if (user) {
 						setUser(user);
 						setUserProductId(user.productId);
+						console.log(user)
+						
+						const productAccounts = await program.account.productAccount.all();
+						setAllProduct(productAccounts);
+						console.log(productAccounts);
 					}
 				} catch(err) {
 					console.log("No user");
@@ -124,10 +131,6 @@ export const ProductProvider = ({ children }) => {
 				const [userPda] = await findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
 				const productPda = new PublicKey(productId);
 				const nextOwnerPda = new PublicKey(next_owner);
-				const temp = [productPda];
-
-				console.log(userPda);
-				console.log(productPda);
 
 				await program.methods
 				.addRecord(location, nextOwnerPda, certUrl)
@@ -137,6 +140,8 @@ export const ProductProvider = ({ children }) => {
 					authority: publicKey,
 					SystemProgram: SystemProgram.programId
 				}).rpc()
+
+				setUpdateSuccess(true);
 
 			} catch (err) {
 				console.log(err);
@@ -154,10 +159,13 @@ export const ProductProvider = ({ children }) => {
 				connected,
 				transactionPending,
 				newProduct,
+				updateSuccess,
+				allProduct,
 				setNewProduct,
+				setUpdateSuccess,
 				registerUser,
 				createProduct,
-				addRecord
+				addRecord,
 			}}
 		>
 

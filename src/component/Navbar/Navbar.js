@@ -13,7 +13,7 @@ const Navbar = () => {
       </Link>
 
 			<div className="userField">
-				{connected? (user ? <h5>{user.certificate}</h5> : <h5>Not registered</h5>) : <div></div>}
+				{connected? (user ? <h5>{user.role}</h5> : <h5>Not registered</h5>) : <div></div>}
 				<WalletMultiButton className="walletButton"/>
 			</div>
     </header>

@@ -81,7 +81,8 @@ const RegisterPage = () => {
                 </div>
             ) : (
                 <div style={{ padding: "20px" }}>
-                    <h3>You have already registered an account</h3>
+                    <h5>You have already registered an account</h5>
+										{/* <b><p>{user.address.toString()}</p></b> */}
                 </div>
             ))}
         </div>

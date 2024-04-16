@@ -35,11 +35,11 @@
 			],
 			"args": [
 				{
-					"name": "certificate",
+					"name": "role",
 					"type": "string"
 				},
 				{
-					"name": "role",
+					"name": "certificate",
 					"type": "string"
 				}
 			]
@@ -164,6 +164,10 @@
 					{
 						"name": "productOrigin",
 						"type": "publicKey"
+					},
+					{
+						"name": "organization",
+						"type": "string"
 					}
 				]
 			}
@@ -208,6 +212,6 @@
 		}
 	],
 	"metadata": {
-		"address": "HC7v6BhVukUcnzEqqkrv89ECrWemx1UTeMkmZchbs9AP"
+		"address": "5BvpCr5tAWHDTFemNihrBE5L2k2EzokTh3jMVteYuppK"
 	}
 }

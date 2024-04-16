@@ -20,12 +20,16 @@ const CreatePage = () => {
 		}, [])
 
     return (
-        <div className="create">
-					{newProduct != "" ? (
-						<div style={{ padding: "20px", textAlign: "center" }}>
-							The new product is created and the assigned ID is <b>{newProduct}</b>
-						</div>
-					) : (
+			<>
+			{newProduct != "" ? (
+				<div style={{ padding: "40px", textAlign: "center" }}>
+				<h5>
+					The new product is created and the assigned ID is
+				</h5>
+				<h5><b>{newProduct}</b></h5>
+				</div>
+			) : (
+						<div className="create">
             <form style={{ padding: "20px" }} onSubmit={handleSubmit}>
                 <h4>Create a product</h4>
 
@@ -42,9 +46,10 @@ const CreatePage = () => {
                     className={connected ? "enabledButton" : "disabledButton"}>
                     Submit
                 </button>
-            </form>
+								</form>
+							</div>
 					)}
-        </div>
+			</>
     );
 };
 
