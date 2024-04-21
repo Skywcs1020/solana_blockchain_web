@@ -43,6 +43,11 @@ export const ProductProvider = ({ children }) => {
 	
 	useEffect(() => {
 		const start = async () => {
+			if (program) {
+				const productAccounts = await program.account.productAccount.all();
+				setAllProduct(productAccounts);
+				console.log(productAccounts);
+			}
 			if (program && publicKey) {
 				try {
 					const [userPda] = await findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
@@ -50,11 +55,7 @@ export const ProductProvider = ({ children }) => {
 					if (user) {
 						setUser(user);
 						setUserProductId(user.productId);
-						console.log(user)
 						
-						const productAccounts = await program.account.productAccount.all();
-						setAllProduct(productAccounts);
-						console.log(productAccounts);
 					}
 				} catch(err) {
 					console.log("No user");

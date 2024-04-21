@@ -25,7 +25,7 @@ function App() {
 											<Route path="/register" element={<RegisterPage />} />
 											<Route path="/create" element={<CreatePage />} />
 											<Route path="/view" element={<ViewLoadPage />} />
-											<Route path="/view/:id" element={<ViewPage />} />
+											<Route path="/view/:productId" element={<ViewPage />} />
 											<Route path="/update" element={<UpdatePage />} />
 									</Routes>
 								</ProductProvider>
