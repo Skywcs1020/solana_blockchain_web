@@ -46,7 +46,6 @@ export const ProductProvider = ({ children }) => {
 			if (program) {
 				const productAccounts = await program.account.productAccount.all();
 				setAllProduct(productAccounts);
-				console.log(productAccounts);
 			}
 			if (program && publicKey) {
 				try {

@@ -24,12 +24,11 @@ const ViewPage = () => {
 		const temp = allProduct.find(product => product.publicKey.toString() == productId);
 
 		setData(temp);
-
 	}, []) 
-
-
+	
+	
   return (
-    <center>
+		<center>
 			{!data ? (
 				<div style={{ padding: "20px" }}>
 					<h5>Product not found</h5>
@@ -39,6 +38,7 @@ const ViewPage = () => {
 					<h2 style={{ color: "#E6AF2E"}}>{data.account.productName}</h2>
 					<h6>Product ID: <b>{data.publicKey.toString()}</b></h6>
 					<h6>Origin: <b>{data.account.organization}</b></h6>
+					<h6>Current Owner: <b>{data.account.recordCount != 0 ? data.account.record[data.account.recordCount - 1].role : data.account.organization}</b></h6>
 					<h6>Record Count: <b>{data.account.recordCount}</b></h6>
 	
 					<center>
